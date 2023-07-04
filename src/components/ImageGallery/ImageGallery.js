@@ -1,7 +1,9 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { ImageGalleryItem } from '../ImageGalleryItem';
 import { Button } from '../Button';
 import { RotatingLines } from 'react-loader-spinner';
+import { Modal } from '../Modal';
 import css from '../ImageGallery/ImageGallery.module.css';
 
 const KEY = '34603447-420b9507c9dfa301393340c59';
@@ -13,6 +15,8 @@ class ImageGallery extends Component {
     images: [],
     page: 1,
     loading: false,
+    showModal: false,
+    activeIndex: null,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -66,11 +70,33 @@ class ImageGallery extends Component {
         this.setState(prevState => ({ page: prevState.page + 1 }));
       });
   };
+  setActiveIndex = index => {
+    this.setState({ index });
+    console.log(index);
+  };
+  openModal = () => {
+    this.setState({ showModal: true });
+    console.log(`toggle modal`);
+  };
+  closeModal = () => {
+    this.setState({ showModal: false });
+  };
+
   render() {
-    const { images, loading } = this.state;
+    const { images, loading, showModal, index } = this.state;
     return (
       <div>
-        {loading === true && (
+        {showModal && (
+          <Modal onClose={this.closeModal}>
+            <img
+              src={images[index].largeImageURL}
+              alt={images[index].tags}
+              width="700px"
+              height="450"
+            />
+          </Modal>
+        )}
+        {loading && (
           <div className="gallery__section">
             <RotatingLines
               strokeColor="grey"
@@ -83,22 +109,26 @@ class ImageGallery extends Component {
         )}
 
         <ul className={css.gallery}>
-          {images.map(image => {
+          {images.map((image, index) => {
             return (
               <ImageGalleryItem
-                //       onClick={this.toggleModal}
-                //       getIndex={this.getIndex}
+                onClick={this.openModal}
+                setIndex={this.setActiveIndex}
                 key={image.id}
-                //       index={index}
+                index={index}
                 image={image.webformatURL}
                 tags={image.tags}
               />
             );
           })}
         </ul>
-        {images.length > 0 && <Button onLoadMore={this.onLoadMore}></Button>}
+        {images.length >= 12 && <Button onLoadMore={this.onLoadMore}></Button>}
       </div>
     );
   }
 }
+ImageGallery.propTypes = {
+  query: PropTypes.string,
+  page: PropTypes.number,
+};
 export { ImageGallery };
