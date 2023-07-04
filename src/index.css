@@ -13,3 +13,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.gallery__section {
+  width: 96px;
+  margin-left: auto;
+  margin-right: auto;
+}
