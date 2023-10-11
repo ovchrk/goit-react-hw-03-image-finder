@@ -8,7 +8,6 @@ class App extends Component {
     page: 1,
   }
 
-
   onSearch = value => {
     this.setState({ value, page: 1 })
   } 
@@ -19,9 +18,7 @@ class App extends Component {
     return (<div>
       <Searchbar onSubmit={this.onSearch}></Searchbar>
       <ImageGallery query={value} page={this.state.page}>
-       
       </ImageGallery>
-      
     </div>)
   }
 }

@@ -72,11 +72,9 @@ class ImageGallery extends Component {
   };
   setActiveIndex = index => {
     this.setState({ index });
-    console.log(index);
   };
   openModal = () => {
     this.setState({ showModal: true });
-    console.log(`toggle modal`);
   };
   closeModal = () => {
     this.setState({ showModal: false });
