@@ -31,11 +31,14 @@ class ImageGallery extends Component {
           if (res.ok) {
             return res.json();
           }
-          return Promise.reject(
-            new Error(`По запросу ${newQuery} ничего не найдено.`)
-          );
         })
         .then(res => {
+          if (res.total === 0) {
+            this.setState({ loading: false });
+            window.alert(
+              `Nothing was fount on your request '${newQuery}'. Please enter valid request!`
+            );
+          }
           this.setState({ images: res.hits });
         })
         .finally(() => {
@@ -55,11 +58,7 @@ class ImageGallery extends Component {
         if (res.ok) {
           return res.json();
         }
-        return Promise.reject(
-          new Error(`По запросу ${query} ничего не найдено.`)
-        );
       })
-
       .then(res => {
         this.setState(prevState => ({
           images: [...prevState.images, ...res.hits],
@@ -105,6 +104,7 @@ class ImageGallery extends Component {
             />
           </div>
         )}
+        {images.length === 0}
 
         <ul className={css.gallery}>
           {images.map((image, index) => {
