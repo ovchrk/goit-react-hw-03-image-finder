@@ -93,18 +93,6 @@ class ImageGallery extends Component {
             />
           </Modal>
         )}
-        {loading && (
-          <div className="gallery__section">
-            <RotatingLines
-              strokeColor="grey"
-              strokeWidth="5"
-              animationDuration="0.75"
-              width="96"
-              visible={true}
-            />
-          </div>
-        )}
-        {images.length === 0}
 
         <ul className={css.gallery}>
           {images.map((image, index) => {
@@ -120,6 +108,17 @@ class ImageGallery extends Component {
             );
           })}
         </ul>
+        {loading && (
+          <div className="gallery__section">
+            <RotatingLines
+              strokeColor="grey"
+              strokeWidth="5"
+              animationDuration="0.75"
+              width="96"
+              visible={true}
+            />
+          </div>
+        )}
         {images.length >= 12 && <Button onLoadMore={this.onLoadMore}></Button>}
       </div>
     );
