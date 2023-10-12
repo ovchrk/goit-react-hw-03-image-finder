@@ -19,12 +19,12 @@ class ImageGallery extends Component {
     activeIndex: null,
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps) {
     const prevQuery = prevProps.query;
     const newQuery = this.props.query;
     if (prevQuery !== newQuery) {
-      this.setState({ query: newQuery, loading: true, images: [] });
-      fetch(
+      this.setState({ query: newQuery, images: [], loading: true, page: 1 });
+      await fetch(
         `${BASE_URL}?q=${newQuery}&page=${this.props.page}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
       )
         .then(res => {
