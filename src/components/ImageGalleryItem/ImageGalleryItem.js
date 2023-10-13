@@ -21,8 +21,8 @@ export class ImageGalleryItem extends Component {
 }
 
 ImageGalleryItem.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  setIndex: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
+  setIndex: PropTypes.func,
   index: PropTypes.number.isRequired,
   image: PropTypes.string.isRequired,
   tags: PropTypes.string,
